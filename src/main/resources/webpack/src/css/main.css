@@ -1,0 +1,71 @@
+body {
+    font-family: "Microsoft YaHei UI";
+    font-size: 14px !important;
+}
+
+h1 {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+header {
+    background: white;
+}
+
+header ul, header ul li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.box-body {
+    padding: 0px 10px;
+}
+
+.ui-widget-overlay {
+    opacity: 0.3;
+}
+
+.dropdown-menu {
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+}
+
+.main-sidebar {
+    padding-top: 25px;
+}
+
+.fixed .content-wrapper {
+    padding-top: 32px;
+}
+
+.ci-ws-shrink-show {
+    display: none;
+}
+
+.ci-ws-container-details {
+    display: none;
+}
+
+.ant-table-bordered .ant-table-thead > tr > th, .ant-table-bordered .ant-table-tbody > tr > td {
+    padding: 5px !important;
+}
+
+#caseSelector {
+    width: 70%;
+}
+
+#caseInfo span {
+    font-size: 1.2em;
+}
+
+#caseName {
+    width: 20em;
+}
+
+#caseOperatorAndDate {
+    font-size: 12px;
+}

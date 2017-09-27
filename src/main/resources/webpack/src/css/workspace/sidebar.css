@@ -1,0 +1,10 @@
+.sidebar-form {
+    max-height: 31.6%;
+    margin: 8px 0px 8px 8px !important;
+}
+
+.sidebar-form .box-body {
+    overflow: hidden;
+    height: 200px;
+    overflow-y: auto;
+}

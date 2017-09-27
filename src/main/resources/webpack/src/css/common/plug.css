@@ -1,0 +1,25 @@
+/*标签样式*/
+.ci-plung-tag {
+    margin-top: 5%;
+    width: auto;
+}
+
+.ci-plung-tag-label {
+    margin-top: 35%;
+    display: inline-block;
+}
+
+.ci-plung-tag-tags {
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+.ci-plung-tag-labels {
+    line-height: 35px;
+}
+.ci-plug-tag-checkbox{
+    margin-right: 5%;
+}
+.ci-plug-tag-button{
+    margin-left: 5px;
+}

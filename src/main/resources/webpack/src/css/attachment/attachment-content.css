@@ -1,0 +1,70 @@
+.ci-attachment-detail-area {
+    position: relative;
+    border-radius: 3px;
+    background: #ffffff;
+    border-top: 3px solid #d2d6de;
+    margin-bottom: 20px;
+    padding-left: 0px;
+    /* width: 100%; */
+    box-shadow: 0 1px 1px rgba(221, 122, 8, 0.1);
+    border-top-color: #00a65a;
+}
+
+.ci-attachment-detail-row {
+    padding: 10px;
+}
+
+.ci-tag-area {
+    position: relative;
+    border-radius: 3px;
+    background: #ffffff;
+    border-top: 2px solid #d2d6de;
+    border-bottom: 2px solid #d2d6de;
+    /* width: 100%; */
+    box-shadow: 0 1px 1px rgba(221, 122, 8, 0.1);
+    border-color: #18b8e8;
+}
+
+.ci-attachment-btn {
+    width: 140px;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+.ci-tag-label {
+    margin-left: 15px;
+}
+
+.ci-tag-content {
+    display: inline;
+}
+
+.ci-content-title-area {
+    padding: 8px;
+}
+
+.ci-attachment-attr {
+    padding-right: 10px;
+}
+
+.ci-content-area {
+    height: 450px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+    border-radius: 3px;
+    background: #ffffff;
+    border-top: 2px solid #d2d6de;
+    border-bottom: 2px solid #d2d6de;
+    /* width: 100%; */
+    box-shadow: 0 1px 1px rgba(221, 122, 8, 0.1);
+    border-color: #18b8e8;
+}
+
+.ci-attachment-show {
+    text-align: center;
+}
+
+.ci-attachment-image {
+    padding: 10px;
+}

@@ -1,0 +1,10 @@
+.ci-mailbox-detail-row {
+    padding: 10px;
+    line-height: 35px;
+}
+.ci-mailbox-group{
+    width:30%;
+}
+.ci-mailbox-label{
+    width: 60px;
+}

@@ -1,0 +1,59 @@
+.ci-search-area {
+    max-height: 160px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 2px;
+}
+
+.ci-search-content {
+    /*            border: solid 1px red;*/
+
+    /*            padding-left: 8px;*/
+    /*            padding-right: 8px;*/
+    /*            overflow: auto;*/
+}
+
+.ci-operation-btn-area {
+    margin: 0 auto;
+    text-align: center;
+    line-height: 50px
+}
+
+.ci-search-btn, .ci-save-btn {
+    font-size: 22px;
+    margin: 8px;
+    color: #367FA9;
+    text-align: center;
+}
+
+.ci-search-content .form-control {
+    width: 95%
+}
+
+.ci-search-btn-area {
+    line-height: 35px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.ci-search-btn-area .ci-add-btn {
+    margin-right: 10px;
+    display: none;
+    color: #00A65A;
+}
+
+.ci-condition-row {
+    margin: 3px;
+}
+
+.ci-search-area .form-control {
+    height: 30px;
+    font-size: 12px;
+    padding: 6px 8px;
+}
+
+.ci-remove-btn {
+    color: #dd4b39;
+}
+
+

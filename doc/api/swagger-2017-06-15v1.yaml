@@ -1,0 +1,2306 @@
+# this is an example of the Uber API
+# as a demonstration of an API spec in YAML
+swagger: '2.0'
+info:
+  title: cInsight-gui
+  description: The Case Analysis Software
+  version: "1.0.0"
+  termsOfService: http://www.xaeport.com
+host: localhost
+# the domain of the service
+# host: api.uber.com
+# array of all schemes that your API supports
+schemes:
+  - http
+  - https
+# will be prefixed to all paths
+basePath: /v10
+
+tags:
+  - name: plugin
+    description: 插件信息
+  - name: lexicon
+    description: 词库信息
+  - name: logout
+    description: 退出
+  - name: case
+    description: 案件
+  - name: load
+    description: 装载
+  - name: tag
+    description: 标签
+  - name: resultset
+    description: 结果集
+  - name: history
+    description: 操作记录
+  - name: search
+    description: 检索
+  - name: mail
+    description: 邮件
+  - name: attachment
+    description: 附件
+  - name: mailbox
+    description: 邮箱
+  - name: contact
+    description: 联系人
+produces:
+  - application/json
+paths:
+  /plugin/options:
+    get:
+      summary: 获取插件列表
+      description: 功能菜单获取插件列表
+      operationId: selectPluginOptionList
+      tags:
+        - plugin
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Plugin'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: 启用/禁用插件
+      description: 功能菜单启用/禁用插件，pluginIds为要启用的插件id集合，不再此数据中的id将被禁用
+      operationId: updatePluginOptions
+      tags:
+        - plugin
+      parameters:
+        - name: pluginIds
+          in: query
+          description: 插件id数组
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Correct'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /plugin/lexicon/options:
+    get:
+      summary: 获取词库配置列表
+      description: 功能菜单获取词库配置列表
+      operationId: selectLexiconOptionList
+      tags:
+        - lexicon
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Lexicon'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+    put:
+      summary: 启用/禁用词库配置
+      description:  功能菜单启用/禁用词库配置，lexiconIds为要启用的词库id集合，不再此数据中的id将被禁用
+      operationId: updateLexiconOptions
+      tags:
+        - lexicon
+      parameters:
+        - name: lexiconIds
+          in: query
+          description: 插件id数组
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Correct'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /engine:
+    delete:
+      summary: 安全退出
+      description: 安全退出，向引擎发送停止指令，异步接口,并关闭浏览器
+      operationId: safeLogout
+      tags:
+        - logout
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Correct'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /case:
+    get:
+      summary: 获取案件列表
+      description: 获取案件列表（默认按<最后查看时间>倒序排列）
+      operationId: selectCaseList
+      tags:
+        - case
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CaseInfo'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+    post:
+      summary: 新建案件
+      description: 新建案件
+      operationId: createCase
+      tags:
+        - case
+      parameters:
+        - name: caseCode
+          in: query
+          description: 案件编号（唯一）
+          required: true
+          type: string
+        - name: caseName
+          in: query
+          description: 案件名称
+          required: true
+          type: string
+        - name: caseOperator
+          in: query
+          description: 负责人
+          required: true
+          type: string
+        - name: kickoffDate
+          in: query
+          description: 立案日期
+          required: true
+          type: string
+        - name: remark
+          in: query
+          description: 备注
+          required: false
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Correct'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+
+  /case/{caseId}:
+    delete:
+      summary: 删除案件
+      description: 删除案件
+      operationId: deleteCase
+      tags:
+        - case
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Correct'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: 编辑案件
+      description: 编辑案件
+      operationId: updateCase
+      tags:
+        - case
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: caseName
+          in: query
+          description: 案件名称
+          required: true
+          type: string
+        - name: caseOperator
+          in: query
+          description: 负责人
+          required: true
+          type: string
+        - name: kickoffDate
+          in: query
+          description: 立案日期
+          required: true
+          type: string
+        - name: remark
+          in: query
+          description: 备注
+          required: false
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Correct'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+
+  /case/generator:
+    post:
+      summary: 生成案件编号
+      description: 生成唯一可用的案件编号
+      operationId: generatorCaseCode
+      tags:
+        - case
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            properties:
+              caseCode:
+                type: string
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /case/activate/{caseId}:
+     put:
+      summary: 案件激活
+      description: 案件激活（激活引擎案件切换）
+      operationId: activateCase
+      tags:
+        - case
+      parameters:
+      - name: caseId
+        in: path
+        description: 案件id
+        required: true
+        type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Correct'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /load/{caseId}/options:
+    get:
+      summary: 数据装载插件配置列表
+      description: 数据装载时查询数据装载插件配置列表
+      operationId: selectLoadCaseOptionList
+      tags:
+        - load
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Load'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /load/{caseId}:
+    post:
+      summary: 开始装载
+      description: 点击开始装载按钮，装载邮件数据
+      operationId: loadMailData
+      tags:
+        - load
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: source
+          in: query
+          description: 插件名称
+          required: true
+          type: string
+        - name: options
+          in: query
+          description: 配置项集合
+          required: true
+          type: string
+
+
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Load'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+    get:
+      summary: 查询装载状态
+      description: 装载过程中，实时查看装载状态
+      operationId: getLoadState
+      tags:
+        - load
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/LoadState'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+    delete:
+      summary: 停止装载
+      description: 停止装载
+      operationId: stopLoadMail
+      tags:
+        - load
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Correct'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /load/{caseId}/report:
+    get:
+      summary: 查询装载报告
+      description: 装载完成程中，查看装载报告
+      operationId: getLoadReport
+      tags:
+        - load
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/LoadReport'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /tag/{caseId}:
+    get:
+      summary: 查询标签列表
+      description: 查询标签树列表，按标签类型排序
+      operationId: selectTagList
+      tags:
+        - tag
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/TagTree'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /tag/customs/{caseId}:
+    get:
+      summary: 查询自定义标签列表
+      description: 查询自定义标签列表，按标签类型排序
+      operationId: selectCustomTagList
+      tags:
+        - tag
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CustomTag'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+    post:
+      summary: 新建自定义标签
+      description: 新建自定义标签
+      operationId: createCustomTagList
+      tags:
+        - tag
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: tagName
+          in: query
+          description: 自定义标签name
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Correct'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /resultset/{caseId}:
+    get:
+      summary: 查询结果集列表
+      description: 查询结果集列表，按创建时间倒序排列 top100
+      operationId: selectResultSetList
+      tags:
+        - resultset
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ResultSet'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+    post:
+      summary: 新增结果集
+      description: 新增结果集
+      operationId: createResultSet
+      tags:
+        - resultset
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: resultsetName
+          in: query
+          description: 结果集名称
+          required: true
+          type: string
+        - name: resultsetToken
+          in: query
+          description: 结果集token
+          required: true
+          type: string
+        - name: conditions
+          in: query
+          description: 检索条件
+          required: true
+          type: string
+
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Correct'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /resultset/{caseId}/{resultsetId}:
+    get:
+      summary: 查询结果集详情
+      description: 查询结果集详情
+      operationId: getResultSetDetail
+      tags:
+        - resultset
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: resultsetId
+          in: path
+          description: 结果集id
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/ResultSetDetail'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+    delete:
+      summary: 删除结果集
+      description: 删除结果集
+      operationId: deleteResultSet
+      tags:
+        - resultset
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: resultsetId
+          in: path
+          description: 结果集id
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Correct'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /history/{caseId}:
+    get:
+      summary: 查询操作记录列表
+      description: 查询操作记录列表，按创建时间倒序排列 top100
+      operationId: selectHistoryList
+      tags:
+        - history
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/History'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+    post:
+      summary: 新增操作记录
+      description: 新增操作记录
+      operationId: createHistory
+      tags:
+        - history
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: historyName
+          in: query
+          description: 操作记录名称
+          required: true
+          type: string
+        - name: historyPage
+          in: query
+          description: 操作界面
+          required: true
+          type: string
+        - name: detailId
+          in: query
+          description: 详情id
+          required: true
+          type: string
+        - name: conditions
+          in: query
+          description: 检索条件
+          required: true
+          type: string
+
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Correct'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /history/{caseId}/{historyId}:
+    get:
+      summary: 查询操作记录详情
+      description: 查询操作记录详情
+      operationId: getHistoryDetail
+      tags:
+        - history
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: historyId
+          in: path
+          description: 操作记录id
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/HistoryDetail'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+    delete:
+      summary: 删除操作记录
+      description: 删除操作记录
+      operationId: deleteHistory
+      tags:
+        - history
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: historyId
+          in: path
+          description: 操作记录id
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Correct'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /search/{caseId}:
+    get:
+      summary: 检索
+      description: 检索 邮件、附件、邮箱、联系人
+      operationId: getSearchDataCount
+      tags:
+        - search
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: conditions
+          in: query
+          description: 检索条件
+          required: false
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/SearchCount'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+
+  /mail/{caseId}:
+    get:
+      summary: 获取邮件列表
+      description: 获取邮件列表，按照发送时间倒序排列
+      operationId: selectMailList
+      tags:
+        - mail
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: conditions
+          in: query
+          description: 检索条件
+          required: false
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/MailList'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /mail/{caseId}/{mailId}:
+    get:
+      summary: 获取邮件详情
+      description: 获取邮件详情
+      operationId: getMailDetail
+      tags:
+        - mail
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: mailId
+          in: path
+          description: 邮件id
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/MailDetail'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /mail/{caseId}/{mailId}/notes:
+    put:
+      summary: 邮件批注
+      description: 邮件批注
+      operationId: updateMailNotes
+      tags:
+        - mail
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: mailId
+          in: path
+          description: 邮件id
+          required: true
+          type: string
+        - name: notes
+          in: query
+          description: 批注内容
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Correct'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /mail/{caseId}/{mailId}/tag:
+    put:
+      summary: 邮件修改标签
+      description: 邮件修改标签
+      operationId: updateMailTag
+      tags:
+        - mail
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: mailId
+          in: path
+          description: 邮件id
+          required: true
+          type: string
+        - name: tags
+          in: query
+          description:  标签字符串 name1,name2,name3
+          required: true
+          type: string
+        - name: sysTagCount
+          in: query
+          required: true
+          type: integer
+          description: 原始系统标签数目 sys_tag_count
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Correct'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+
+  /attachment/{caseId}:
+    get:
+      summary: 获取附件列表
+      description: 获取附件列表
+      operationId: selectAttachmentList
+      tags:
+        - attachment
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: conditions
+          in: query
+          description: 检索条件
+          required: false
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/AttachmentList'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /attachment/{caseId}/{attachmentId}:
+    get:
+      summary: 获取附件详情
+      description: 获取附件详情
+      operationId: getAttachmentDetail
+      tags:
+        - attachment
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: attachmentId
+          in: path
+          description: 附件id
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/AttachmentDetail'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+
+  /attachment/{caseId}/{attachmentId}/notes:
+    put:
+      summary: 附件批注
+      description: 附件批注
+      operationId: updateAttachmentNotes
+      tags:
+        - attachment
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: attachmentId
+          in: path
+          description: 附件id
+          required: true
+          type: string
+        - name: notes
+          in: query
+          description: 批注内容
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Correct'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /attachment/{caseId}/{attachmentId}/tag:
+    put:
+      summary: 附件修改标签
+      description: 附件修改标签
+      operationId: updateAttachmentTag
+      tags:
+        - attachment
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: attachmentId
+          in: path
+          description: 附件id
+          required: true
+          type: string
+        - name: tags
+          in: query
+          description: 标签字符串 name1,name2,name3
+          required: true
+          type: string
+        - name: sysTagCount
+          in: query
+          required: true
+          type: integer
+          description: 原始系统标签数目 sys_tag_count
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Correct'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /attachment/{caseId}/{attachmentId}/mail:
+    get:
+      summary: 相关性分析
+      description: 附件相关性分析,按照发送时间倒序排列
+      operationId: getAttachmentRelation
+      tags:
+        - attachment
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: attachmentId
+          in: path
+          description: 附件id
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/MailList'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /mailbox/{caseId}:
+    get:
+      summary: 获取邮箱列表
+      description: 获取邮箱列表
+      operationId: selectMailboxList
+      tags:
+        - mailbox
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: conditions
+          in: query
+          description: 检索条件
+          required: false
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/MailboxList'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /mailbox/{caseId}/{mailboxId}/filter:
+    get:
+      summary: 获取邮箱统计
+      description: 获取邮箱统计
+      operationId: getMailboxStatistics
+      tags:
+        - mailbox
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: mailboxId
+          in: path
+          description: 邮箱id
+          required: true
+          type: string
+        - name: from
+          in: query
+          description: 发件人
+          required: false
+          type: string
+        - name: to
+          in: query
+          description: 收件人
+          required: false
+          type: string
+        - name: content
+          in: query
+          description: 内容关键词
+          required: false
+          type: string
+        - name: subject
+          in: query
+          description: 主题内容关键词
+          required: false
+          type: string
+        - name: cc
+          in: query
+          description: 抄送人
+          required: false
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/MailboxStatistics'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /mailbox/{caseId}/{mailboxId}/inbox:
+    get:
+      summary: 获取所选邮箱中的收件箱邮件列表
+      description: 获取所选邮箱中的收件箱邮件列表
+      operationId: selecInboxList
+      tags:
+        - mailbox
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: mailboxId
+          in: path
+          description: 邮箱id
+          required: true
+          type: string
+        - name: from
+          in: query
+          description: 发件人
+          required: false
+          type: string
+        - name: to
+          in: query
+          description: 收件人
+          required: false
+          type: string
+        - name: content
+          in: query
+          description: 内容关键词
+          required: false
+          type: string
+        - name: subject
+          in: query
+          description: 主题内容关键词
+          required: false
+          type: string
+        - name: cc
+          in: query
+          description: 抄送人
+          required: false
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Mailbox'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /mailbox/{caseId}/{mailboxId}/outbox:
+    get:
+      summary: 获取所选邮箱中的发件箱邮件列表
+      description: 获取所选邮箱中的发件箱邮件列表
+      operationId: selecOutboxList
+      tags:
+        - mailbox
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: mailboxId
+          in: path
+          description: 邮箱id
+          required: true
+          type: string
+        - name: from
+          in: query
+          description: 发件人
+          required: false
+          type: string
+        - name: to
+          in: query
+          description: 收件人
+          required: false
+          type: string
+        - name: content
+          in: query
+          description: 内容关键词
+          required: false
+          type: string
+        - name: subject
+          in: query
+          description: 主题内容关键词
+          required: false
+          type: string
+        - name: cc
+          in: query
+          description: 抄送人
+          required: false
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Mailbox'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /mailbox/{caseId}/{mailboxId}/draftbox:
+    get:
+      summary: 获取所选邮箱中的草稿箱邮件列表
+      description: 获取所选邮箱中的草稿箱邮件列表
+      operationId: selecDraftboxList
+      tags:
+        - mailbox
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: mailboxId
+          in: path
+          description: 邮箱id
+          required: true
+          type: string
+        - name: from
+          in: query
+          description: 发件人
+          required: false
+          type: string
+        - name: to
+          in: query
+          description: 收件人
+          required: false
+          type: string
+        - name: content
+          in: query
+          description: 内容关键词
+          required: false
+          type: string
+        - name: subject
+          in: query
+          description: 主题内容关键词
+          required: false
+          type: string
+        - name: cc
+          in: query
+          description: 抄送人
+          required: false
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Mailbox'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /mailbox/{caseId}/{mailboxId}/trash:
+    get:
+      summary: 获取所选邮箱中的垃圾箱邮件列表
+      description: 获取所选邮箱中的垃圾箱邮件列表
+      operationId: selecTrashList
+      tags:
+        - mailbox
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: mailboxId
+          in: path
+          description: 邮箱id
+          required: true
+          type: string
+        - name: from
+          in: query
+          description: 发件人
+          required: false
+          type: string
+        - name: to
+          in: query
+          description: 收件人
+          required: false
+          type: string
+        - name: content
+          in: query
+          description: 内容关键词
+          required: false
+          type: string
+        - name: subject
+          in: query
+          description: 主题内容关键词
+          required: false
+          type: string
+        - name: cc
+          in: query
+          description: 抄送人
+          required: false
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Mailbox'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /mailbox/{caseId}/{mailboxId}/notes:
+    put:
+      summary: 邮箱批注
+      description: 邮箱批注
+      operationId: updateMailboxNotes
+      tags:
+        - mailbox
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: mailboxId
+          in: path
+          description: 邮箱id
+          required: true
+          type: string
+        - name: notes
+          in: query
+          description: 批注内容
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Correct'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /mailbox/{caseId}/{mailboxId}/tag:
+    put:
+      summary: 邮箱修改标签
+      description: 邮箱修改标签
+      operationId: updateMailboxTag
+      tags:
+        - mailbox
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: mailboxId
+          in: path
+          description: 邮箱id
+          required: true
+          type: string
+        - name: tags
+          in: query
+          description: 附加的标签列表：array
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Correct'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /contact/{caseId}:
+    get:
+      summary: 获取联系人列表
+      description: 获取联系人列表
+      operationId: selectContactList
+      tags:
+        - contact
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: conditions
+          in: query
+          description: 检索条件
+          required: false
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/ContactList'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /contact/{caseId}/{contactId}:
+    get:
+      summary: 获取联系人详情
+      description: 获取联系人详情
+      operationId: getContactDetail
+      tags:
+        - contact
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: contactId
+          in: path
+          description: 附件id
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/ContactDetail'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /contact/{contactId}/relations:
+        get:
+          tags:
+            - contact
+          summary: 联系人关系列表
+          description: '联系人关系列表'
+          operationId: getContactRelationList
+          parameters:
+            - name: "contactId"
+              in: "path"
+              required: true
+              type: "string"
+            - name: "relationMail"
+              in: "query"
+              required: true
+              type: "string"
+          responses:
+            200:
+              description: 操作成功
+              schema:
+                type: object
+                items:
+                  $ref: '#/definitions/MailList'
+            400:
+              description: 操作失败
+              schema:
+                $ref: '#/definitions/Error'
+
+  /contact/{caseId}/{contactId}/notes:
+    put:
+      summary: 联系人批注
+      description: 联系人批注
+      operationId: updateContactNotes
+      tags:
+        - contact
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: contactId
+          in: path
+          description: 联系人id
+          required: true
+          type: string
+        - name: notes
+          in: query
+          description: 批注内容
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Correct'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+  /contact/{caseId}/{contactId}/tag:
+    put:
+      summary: 附件修改标签
+      description: 附件修改标签
+      operationId: updateContactTag
+      tags:
+        - contact
+      parameters:
+        - name: caseId
+          in: path
+          description: 案件id
+          required: true
+          type: string
+        - name: contactId
+          in: path
+          description: 联系人id
+          required: true
+          type: string
+        - name: tags
+          in: query
+          description: 附加的标签列表：array
+          required: true
+          type: string
+      responses:
+        200:
+          description: 操作成功
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Correct'
+        400:
+          description: 操作失败
+          schema:
+            $ref: '#/definitions/Error'
+
+
+
+definitions:
+  Plugin:
+    type: object
+    properties:
+      pluginId:
+        type: string
+        description: 插件id
+      pluginName:
+        type: string
+        description: 插件名称
+      pluginDescription:
+        type: string
+        description: 插件描述文本
+      pluginEnabled:
+        type: boolean
+        description: 插件是否启用
+
+  Lexicon:
+    type: object
+    properties:
+      lexiconId:
+        type: string
+        description: 词库id
+      lexiconName:
+        type: string
+        description: 词库名称
+      lexiconDescription:
+        type: string
+        description: 词库备注
+      lexiconEnabled:
+        type: boolean
+        description: 词库是否启用
+
+  CaseInfo:
+    type: object
+    properties:
+      caseId:
+        type: string
+        description: 案件id
+      caseCode:
+        type: string
+        description: 案件编号
+      caseName:
+        type: string
+        description: 案件名称
+      lastViewTime:
+        type: integer
+        description: 最后查看时间
+      caseOperator:
+        type: string
+        description: 负责人
+      kickoffDate:
+        type: integer
+        description: 立案日期
+      remark:
+        type: string
+        description: 备注
+      mailAmount:
+        type: string
+        description: 邮件数目
+
+  Load:
+    type: object
+    properties:
+      pluginName:
+        type: string
+        description: 插件名称
+      options:
+        type: array
+        items:
+          $ref: '#/definitions/Option'
+
+  Option:
+    type: object
+    properties:
+      optionKey:
+        type: string
+        description: 配置项键名。全局唯一（取值=pluginId.optionId）
+      optionLabel:
+        type: string
+        description: 配置项名称
+      optionValue:
+        type: string
+        description: 配置项键值
+
+
+  LoadState:
+    type: object
+    properties:
+      progressLabel:
+        type: string
+        description: 装载状态文本
+      totalCount:
+        type: integer
+        description: 数据文件总量
+      successCount:
+        type: integer
+        description: 装载成功数量
+      failCount:
+        type: integer
+        description: 装载失败数量
+      processCount:
+        type: integer
+        description: 已装载数量
+      startTime:
+        type: integer
+        description: 装载开始时间
+
+  LoadReport:
+    type: object
+    properties:
+      totalCount:
+        type: integer
+        description: 数据文件总量
+      successCount:
+        type: integer
+        description: 装载成功数量
+      failCount:
+        type: integer
+        description: 装载失败数量
+      failFiles:
+        type: array
+        items:
+          type: string
+
+  Tag:
+    type: object
+    properties:
+      typeName:
+        type: string
+        description: 标签类型
+      typeIcon:
+        type: string
+        description: 标签图标名称
+      tags:
+        type: array
+        description: 标签类型，取值=用户、信息、领域、姓名、文件
+        items:
+          $ref: '#/definitions/TagChild'
+
+  TagChild:
+    type: object
+    properties:
+      tagName:
+        type: string
+        description: 标签名称
+      hitCount:
+        type: integer
+        description: 命中数
+
+  CustomTag:
+    type: object
+    properties:
+      tagId:
+        type: string
+        description: 标签id
+      tagName:
+        type: string
+        description: 标签name
+      tagIcon:
+        type: string
+        description: 标签icon
+      frequency:
+        type: integer
+        description: 使用频率
+      createTime:
+        type: integer
+        description: 创建时间
+      lastUseTime:
+        type: integer
+        description: 最后使用时间
+
+  ResultSet:
+    type: object
+    properties:
+      resultsetId:
+        type: string
+        description: 结果集id
+      resultsetName:
+        type: string
+        description: 结果集名称
+      resultsetToken:
+        type: string
+        description: 结果集token
+      createTime:
+        type: integer
+        description: 结果集创建时间
+
+  ResultSetDetail:
+    type: object
+    properties:
+      resultsetId:
+        type: string
+        description: 结果集id
+      resultsetName:
+        type: string
+        description: 结果集名称
+      resultsetToken:
+        type: string
+        description: 结果集token
+      createTime:
+        type: integer
+        description: 结果集创建时间
+      conditions:
+        type: array
+        description: 检索条件
+        items:
+          $ref: '#/definitions/Condition'
+
+  Condition:
+    type: object
+    properties:
+      keyword:
+        type: string
+        description: 关键词
+      expression:
+        type: string
+        description: 表达式
+      result:
+        type: string
+        description: 条件值
+      relation:
+        type: string
+        description: 条件关系
+
+  History:
+    type: object
+    properties:
+      historyId:
+        type: string
+        description: 操作记录id
+      historyName:
+        type: string
+        description: 操作记录名称
+      createTime:
+        type: integer
+        description: 结果集创建时间
+
+  HistoryDetail:
+    type: object
+    properties:
+      historyId:
+        type: string
+        description: 操作记录id
+      historyName:
+        type: string
+        description: 操作记录名称
+      historyPage:
+        type: string
+        description: 操作界面
+      detailId:
+        type: string
+        description: 详情id
+      createTime:
+        type: integer
+        description: 结果集创建时间
+      conditions:
+        type: array
+        description: 检索条件
+        items:
+          $ref: '#/definitions/Condition'
+
+
+  SearchCount:
+    type: object
+    properties:
+      mailCount:
+        type: integer
+        description: 命中邮件数
+      attachmentCount:
+        type: integer
+        description: 命中附件数
+      mailboxCount:
+        type: integer
+        description: 命中邮箱数
+      contactCount:
+        type: integer
+        description: 命中联系人
+      searchToken:
+        type: string
+        description: 查询token
+
+  MailList:
+    type: object
+    properties:
+      mailId:
+        type: string
+        description: 邮件id
+      from:
+        type: string
+        description: 发件人邮箱
+      subject:
+        type: string
+        description: 邮件主题
+      sendTime:
+        type: integer
+        description: 发送时间
+      sessionCount:
+        type: integer
+        description: 会话数目
+      attachmentCount:
+        type: integer
+        description: 附件数目
+      tagCount:
+        type: integer
+        description: 标签数目
+
+  MailDetail:
+    type: object
+    properties:
+      mailId:
+        type: string
+        description: 邮件id
+      from:
+        type: string
+        description: 发件人
+      to:
+        type: array
+        description: 收件人
+        items:
+          $ref: '#/definitions/MailContact'
+      cc:
+        type: array
+        description: 抄送
+        items:
+          $ref: '#/definitions/MailContact'
+      bcc:
+        type: array
+        description: 暗送
+        items:
+          $ref: '#/definitions/MailContact'
+      subject:
+        type: string
+        description: 邮件主题
+      sendTime:
+        type: integer
+        description: 发送时间
+      sendTimezone:
+        type: integer
+        description: 发送时区
+      mailContent:
+        type: string
+        description: 邮件内容
+      attachments:
+        type: array
+        description: 附件列表
+        items:
+          $ref: '#/definitions/Attachment'
+      tags:
+        type: array
+        description: 标签列表
+        items:
+          $ref: '#/definitions/UseTag'
+      notes:
+        type: string
+        description: 批注内容
+
+  UseTag:
+    type: object
+    properties:
+      typeName:
+        type: string
+        description: 标签名称
+      typeType:
+        type: string
+        description: 标签类型
+      typeIcon:
+        type: string
+        description: 标签图标名称
+
+  Attachment:
+    type: object
+    properties:
+      attachmentId:
+        type: string
+        description: 附件id
+      attachmentName:
+        type: string
+        description: 附件名称
+      attachmentSize:
+        type: integer
+        description: 附件大小
+      attachmentType:
+        type: string
+        description: 附件类型
+      attachmentPath:
+        type: string
+        description: 附件路径
+
+  AttachmentList:
+    type: object
+    properties:
+      attachmentId:
+        type: string
+        description: 附件id
+      attachmentName:
+        type: string
+        description: 附件名称
+      attachmentSize:
+        type: integer
+        description: 附件大小
+      tagCount:
+        type: integer
+        description: 标签数目
+      refrenceCount:
+        type: integer
+        description: 转发次数
+
+  AttachmentDetail:
+    type: object
+    properties:
+      attachmentId:
+        type: string
+        description: 附件id
+      attachmentName:
+        type: string
+        description: 附件名称
+      attachmentSize:
+        type: integer
+        description: 附件大小
+      attachmentContent:
+        type: integer
+        description: 附件内容（图片路径）
+      fileType:
+        type: string
+        description: 文件类型
+      filePath:
+        type: string
+        description: 文件路径
+      createTime:
+        type: integer
+        description: 创建时间
+      attributes:
+        type: array
+        description: 附件属性
+        items:
+          $ref: '#/definitions/Attribute'
+      tags:
+        type: array
+        description: 标签列表
+        items:
+          $ref: '#/definitions/UseTag'
+      notes:
+        type: string
+        description: 批注内容
+
+  Attribute:
+    type: object
+    properties:
+      author:
+        type: string
+        description: 作者
+      company:
+        type: string
+        description: 公司
+      gps:
+        type: string
+        description: GPS
+      camera:
+        type: string
+        description: 相机型号
+      shotTime:
+        type: string
+        description: 拍摄时间
+
+  MailboxList:
+    type: object
+    properties:
+      mailboxId:
+        type: string
+        description: 邮箱id
+      mailboxAddress:
+        type: string
+        description: 邮箱名称
+      inboxCount:
+        type: integer
+        description: 收件箱邮件数量
+      outboxCount:
+        type: integer
+        description: 发件箱邮件数量
+      draftboxCount:
+        type: integer
+        description: 草稿箱邮件数量
+      trashCount:
+        type: integer
+        description: 垃圾箱邮件数量
+
+  MailboxStatistics:
+    type: object
+    properties:
+      inboxCount:
+        type: integer
+        description: 收件箱邮件数量
+      outboxCount:
+        type: integer
+        description: 发件箱邮件数量
+      draftboxCount:
+        type: integer
+        description: 草稿箱邮件数量
+      trashCount:
+        type: integer
+        description: 垃圾箱邮件数量
+
+  Mailbox:
+    type: object
+    properties:
+      mailId:
+        type: string
+        description: 邮件id
+      subject:
+        type: string
+        description: 邮件主题
+      sendTime:
+        type: integer
+        description: 发送时间
+      tagCount:
+        type: integer
+        description: 标签数量
+      attachmentCount:
+        type: integer
+        description: 附件数量
+
+  ContactList:
+    type: object
+    properties:
+      contactId:
+        type: string
+        description: 联系人id
+      contactName:
+        type: string
+        description: 联系人名称
+      contactMailAddr:
+        type: string
+        description: 联系人邮箱
+      associateCount:
+        type: integer
+        description: 相关联联系人数量
+      notes:
+        type: string
+        description: 批注
+      tag:
+        type: string
+        description: 标签
+      tagCount:
+        type: integer
+        description: 标签数量
+      total:
+        type: integer
+        description: 联系人数量
+      tags:
+        type: array
+        description: 标签列表
+        items:
+          $ref: '#/definitions/UseTag'
+      relations:
+        type: array
+        description: 相关联的关系人列表
+        items:
+          $ref: '#/definitions/ContactRelation'
+
+  ContactRelation:
+    type: object
+    properties:
+      to:
+        type: string
+        description: 关系人
+      count:
+        type: string
+        description: 来往邮件数
+
+  ContactDetail:
+    type: object
+    properties:
+      relations:
+        type: array
+        description: 联系人关系列表
+        items:
+          $ref: '#/definitions/ContactDetailRelation'
+      diagram:
+        type: array
+        description: 收发件数量趋势图
+        items:
+          $ref: '#/definitions/Diagram'
+      tags:
+        type: array
+        description: 标签列表
+        items:
+          $ref: '#/definitions/UseTag'
+      notes:
+        type: string
+        description: 批注内容
+
+  ContactDetailRelation:
+    type: object
+    properties:
+      contactMailBox:
+        type: string
+        description: 关系邮箱
+      contacCount:
+        type: integer
+        description: 关系会话总数
+
+  Diagram:
+    type: object
+    properties:
+      date:
+        type: string
+        description: 日期
+      inboxCount:
+        type: integer
+        description: 收件数
+      outboxCount:
+        type: integer
+        description: 发件数
+
+  MailContact:
+    type: object
+    properties:
+      mailAddress:
+        type: string
+        description: 邮箱地址
+
+  Correct:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string

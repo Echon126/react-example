@@ -1,0 +1,66 @@
+# 日志配置
+logging:
+  level:
+    org.springframework: info
+    com.xaeport: debug
+  file: logs/project.log
+# 数据源配置
+spring:
+    datasource:
+        name: cInsight-gui.db
+        # 不再读取url，自动加载 resources/db/cInsight-gui.db
+        url: jdbc:sqlite://d:/sqlite/db/cInsight-gui.db
+        username: ""
+        password: ""
+        # 使用druid数据源
+        type: com.alibaba.druid.pool.DruidDataSource
+        platform: sqlite3
+        #mysql6.0新驱动
+        driverClassName: org.sqlite.JDBC
+        #初始化大小，最小，最大
+        initialSize: 1
+        minIdle: 1
+        maxActive: 30
+        #获取连接等待超时的时间
+        maxWait: 60000
+        # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+        timeBetweenEvictionRunsMillis: 60000
+        # 配置一个连接在池中最小生存的时间，单位是毫秒
+        minEvictableIdleTimeMillis: 300000
+        #validationQuery: SELECT 1 FROM DUAL
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        dbType: mysql
+        #打开PSCache，并且指定每个连接上PSCache的大小
+        poolPreparedStatements: false
+        maxPoolPreparedStatementPerConnectionSize: 0
+        # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+        filters: stat,wall,slf4j
+        # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+        connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+        # 合并多个DruidDataSource的监控数据
+        #spring.datasource.useGlobalDataSourceStat=true
+    thymeleaf:
+        cache: false
+    jackson:
+        date-format: com.xaeport.cinsight.ui.common.RFC3339DateFormat
+        serialization:
+          WRITE_DATES_AS_TIMESTAMPS: false
+server:
+  port: 8000
+
+# 更多数据源
+custom:
+  datasource:
+    names: ds1,ds2
+    ds1:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/demo2?serverTimezone=UTC&characterEncoding=utf-8
+      username: root
+      password: root
+    ds2:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/demo1?serverTimezone=UTC&characterEncoding=utf-8
+      username: root
+      password: root

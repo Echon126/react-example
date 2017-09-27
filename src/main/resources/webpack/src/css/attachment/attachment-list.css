@@ -1,0 +1,33 @@
+.ci-attachment-list-area{
+    padding-right: 5px;
+}
+
+.ci-attachment-list-row{
+    margin-top: 8px;
+    border: solid 1px #00C0EF;
+    border-radius: 3px;
+}
+
+.ci-attachment-item-row{
+    margin: 0 auto;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.ci-attachment-item-name{
+    padding-right:0px;
+    padding-left: 3px;
+    font-size: 14px;
+}
+
+.ci-attachment-item-count{
+    padding: 1px;
+    font-size: 12px;
+    background-color: #00B83F;
+    border-radius: 15px;
+}
+
+.ci-attachment-item-size{
+    padding-left: 3px;
+    font-size: 12px;
+}

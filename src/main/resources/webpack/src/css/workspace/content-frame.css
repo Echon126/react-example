@@ -1,0 +1,32 @@
+
+.ci-ws-container-details {
+    overflow: hidden;
+}
+
+.ci-ws-container-details-float {
+    display: none;
+    position: absolute;
+    overflow: hidden;
+    z-index: 80;
+}
+
+#ci-ws-details-float-overlay{
+    display: none;
+    position: absolute;
+    overflow: hidden;
+    z-index: 70;
+    opacity: 0.5;
+}
+
+#ci-ws-details-float {
+    display: none;
+    background: white;
+    border: 1px solid #ccc;
+    height: 500px;
+    position: absolute;
+    overflow: hidden;
+    z-index: 80;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+}

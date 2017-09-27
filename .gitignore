@@ -1,0 +1,10 @@
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+.idea/
+cInsight-gui.iml
+logs/
+**/node_modules/

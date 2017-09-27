@@ -1,0 +1,66 @@
+.lexicon {
+    text-align: left;
+    margin: auto;
+}
+
+.lexicon-title {
+    margin-left: 25px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.lexicon-content {
+    border: solid #3c8dbc 1px;
+    border-radius: 3px;
+    margin: 0 auto;
+    width: 90%;
+    height: 80%;
+}
+
+.lexicon .checkbox {
+    margin: 10px;
+    display: inline-block;
+}
+
+.lexicon-btn {
+    margin: 5px;
+}
+
+.plugin-area {
+    border: solid 0px black;
+    width: 95%;
+    height: 95%;
+    margin: 5px;
+}
+
+.plugin-label {
+    width: 90%;
+    height: 230px;
+    overflow: auto;
+    border: solid #3c8dbc 1px;
+    border-radius: 3px;
+    margin: 0 auto
+}
+
+.plugin-remark {
+    width: 95%;
+    height: 230px;
+    overflow: auto;
+    border: solid #3c8dbc 1px;
+    border-radius: 3px;
+    margin: 0 auto;
+}
+
+.plugin-area .checkbox {
+    margin: 16px
+}
+
+.remark-content {
+    margin: 15px
+}
+
+.ci-menu-area-btn {
+    margin-right: 10px;
+    font-size: 14px;
+    color: #367FA9;
+}

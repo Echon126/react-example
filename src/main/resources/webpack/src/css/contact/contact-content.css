@@ -1,0 +1,120 @@
+.ci-contact-detail-area {
+    position: relative;
+    border-radius: 3px;
+    background: #ffffff;
+    border-top: 3px solid #d2d6de;
+    margin-bottom: 20px;
+    padding-left: 0px;
+    /* width: 100%; */
+    box-shadow: 0 1px 1px rgba(221, 122, 8, 0.1);
+    border-top-color: #00a65a;
+}
+
+.ci-contact-detail-name {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.ci-contact-detail-row {
+    padding: 10px;
+    margin: 0px;
+}
+
+.ci-tag-area {
+    position: relative;
+    border-radius: 3px;
+    background: #ffffff;
+    border-top: 2px solid #d2d6de;
+    border-bottom: 2px solid #d2d6de;
+    /* width: 100%; */
+    box-shadow: 0 1px 1px rgba(221, 122, 8, 0.1);
+    border-color: #18b8e8;
+}
+
+.ci-bar-area {
+    /*position: relative;*/
+    border-radius: 3px;
+    margin-top: 5px;
+    /*background: #ffffff;*/
+    /*border-top: 2px solid #d2d6de;*/
+    /*border-bottom: 2px solid #d2d6de;*/
+    /*!* width: 100%; *!*/
+    /*box-shadow: 0 1px 1px rgba(221, 122, 8, 0.1);*/
+    /*border-color: #18b8e8;*/
+}
+
+.ci-contact-btn {
+    width: 140px;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+.ci-tag-label {
+    margin-left: 15px;
+}
+
+.ci-tag-content {
+    display: inline;
+}
+
+.ci-content-title-area {
+    padding: 8px;
+}
+
+.ci-contact-attr {
+    padding-right: 10px;
+}
+
+.ci-content-area {
+}
+
+.ci-contact-relation-row {
+    height: 350px;
+}
+
+.ci-contact-relation-list {
+    /*border-radius: 3px;*/
+    /*background: #ffffff;*/
+    /*border-bottom: 2px solid #d2d6de;*/
+    /*border-color: #18b8e8;*/
+    height: 100%;
+    padding-left: 35px;
+    padding-right: 2px;
+
+}
+
+.ci-contact-relation-mail {
+    /*border-radius: 3px;*/
+    /*background: #ffffff;*/
+    /*border-left: 2px solid #d2d6de;*/
+    /*border-bottom: 2px solid #d2d6de;*/
+    /*border-color: #18b8e8;*/
+    height: 100%;
+    padding-left: 2px;
+    padding-right: 35px;
+
+}
+
+.ci-contact-relation-list .relation-title, .ci-contact-relation-mail .relation-title {
+    text-align: center;
+    background-color: #ECF0F5;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 16px;
+}
+
+.ci-contact-bar {
+    width: 1300px;
+    height: 300px;
+    margin: 0 auto;
+}
+
+.ci-contact-relation-table {
+    height: 90%;
+    overflow-y: auto;
+}
+
+.ci-contact-mail-table {
+    height: 90%;
+    overflow-y: auto;
+}

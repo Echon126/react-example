@@ -1,0 +1,94 @@
+.case-id {
+    text-align: center;
+    padding: 16px 10px;
+}
+
+.case-name {
+    text-align: center;
+    padding: 16px 10px;
+}
+
+.ci-case-item-btn {
+    text-align: center;
+    padding: 9px 9px;
+}
+
+.ci-case-edit-btn {
+    margin: 5px;
+}
+
+.ci-case-del-btn {
+    margin: 5px;
+}
+
+.ci-no-load-content {
+    padding-top: 330px;
+}
+
+.ci-no-load-data {
+    width: 20%;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.case-title1 {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.case-title3 {
+    text-align: left;
+}
+
+.case-title2 {
+    text-align: left;
+    font-size: 15px;
+}
+
+.change-case-btn, .load-case-btn {
+    margin-right: 10px;
+    font-size: 15px;
+    color: #367FA9;
+}
+
+.case-row {
+    border-top: solid 1px grey;
+    border-bottom: solid 1px grey;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.case-list {
+    width: 99%;
+}
+
+.ci-case-li {
+    border-bottom: 1px solid #f4f4f4;
+    margin: 0;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.ci-case-item {
+    background: transparent;
+    color: #444;
+    cursor: pointer;
+    border-top: 0;
+    border-left-color: #3c8dbc;
+}
+
+.ci-case-area {
+    width: 99%;
+}
+
+.nav-stacked > li > .ci-case-item:hover {
+    background: #ECF0F5;
+    color: #444;
+    font-size: 15px;
+    border-top: 0;
+    border-left: solid 2px #3c8dbc;
+    font-weight: 600;
+}
+

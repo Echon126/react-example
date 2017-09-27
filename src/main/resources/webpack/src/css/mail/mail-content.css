@@ -1,0 +1,22 @@
+.ci-mail-subject {
+    width: 120px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+}
+
+.ci-mail-subject:hover {
+    display: block;
+    width: 100%;
+    overflow: auto;
+    white-space: normal;
+}
+
+.ci-mail-subject:hover {
+    width: auto;
+}
+
+#icon {
+    margin-right: 5%;
+}
